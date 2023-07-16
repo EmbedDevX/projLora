@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Gallery</title>
+    <style>
+        .image-container {
+            display: inline-block;
+            text-align: center;
+            margin: 10px;
+        }
+        .image-container img {
+            max-width: 200px;
+            max-height: 200px;
+            cursor: pointer;
+        }
+        .image-container p {
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Gallery</h1>
+    {% for image in images %}
+        <div class="image-container">
+            <a href="{{ url_for('get_image2', image_path=image['name']) }}" target="_blank">
+                <img src="{{ url_for('get_image2', image_path=image['name']) }}" alt="{{ image['name'] }}">
+            </a>
+            <p>{{ image['name'] }}</p>
+            <p>Size: {{ image['size'] }} bytes</p>
+            <p>Modified Time: {{ image['modified_time'] }}</p>
+        </div>
+    {% endfor %}
+</body>
+</html>
