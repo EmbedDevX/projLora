@@ -1,0 +1,21 @@
+[Unit]
+Description=Custom Python Service
+After=multi-user.target
+Conflicts=getty@tty1.service
+ 
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/pi/motion_cam_sqlite_v3.0.py
+StandardInput=tty-force
+ 
+[Install]
+WantedBy=multi-user.target
+
+
+#[commands]
+# sudo systemctl daemon-reload 
+
+# sudo systemctl enable myscript.service 
+
+#sudo systemctl start myscript.service #
+

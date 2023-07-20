@@ -1,0 +1,13 @@
+[Unit]
+Description=Flask Web application.
+After=network.target
+Conflicts=getty@tty1.service
+ 
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/WebApplication/
+ExecStart=/usr/bin/gunicorn --workers 5 --bind 0.0.0.0:5100 wsgi:app
+ 
+[Install]
+WantedBy=multi-user.target

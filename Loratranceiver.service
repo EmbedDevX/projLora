@@ -1,0 +1,11 @@
+[Unit]
+Description=Motion frame capturing
+After=multi-user.target
+Conflicts=getty@tty1.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/pi/AmanLoraProj/motion_cam_sqlite_mod.py
+
+[Install]
+WantedBy=multi-user.target
