@@ -187,7 +187,7 @@ while True:
         gaus = cv2.GaussianBlur(frame,(13,13),0)
         font = cv2.FONT_HERSHEY_PLAIN
         cv2.putText(frame, str(datetime.now().strftime("%d/%m/%Y, %H:%M:%S")), (10, 20),font, 1, (0, 255, 0), 1, cv2.LINE_AA)
-        cv2.putText(frame, "D1", (10, 50),font, 1, (0, 255, 0), 1, cv2.LINE_AA)
+        cv2.putText(frame, "D3", (10, 50),font, 1, (0, 255, 0), 1, cv2.LINE_AA)
         #try:
         
         #except:
