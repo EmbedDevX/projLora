@@ -21,11 +21,14 @@ HEIGHT = 64
 BORDER = 5
 LOOPTIME = 1.0
 
-oled_reset = digitalio.DigitalInOut(board.D4)
-
-i2c = board.I2C()
-oled = adafruit_ssd1306.SSD1306_I2C(WIDTH, HEIGHT, i2c, addr=0x3C, reset=oled_reset)
-
+try:
+    oled_reset = digitalio.DigitalInOut(board.D4)
+    i2c = board.I2C()
+    oled = adafruit_ssd1306.SSD1306_I2C(WIDTH, HEIGHT, i2c, addr=0x3C, reset=oled_reset)
+    oled.fill(0)
+    oled.show()
+except:
+    pass     
 #con = sqlite3.connect('/home/pi/website/instance/logs1.db')    #change the file path of the path where "data.db is present"
  
 # create cursor object
@@ -44,8 +47,6 @@ st= ""
 prev_time = ""
 x_old = 0
 
-oled.fill(0)
-oled.show()
 
 image = Image.new("1", (oled.width, oled.height))
 draw = ImageDraw.Draw(image)
