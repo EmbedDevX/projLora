@@ -27,6 +27,13 @@ try:
     oled = adafruit_ssd1306.SSD1306_I2C(WIDTH, HEIGHT, i2c, addr=0x3C, reset=oled_reset)
     oled.fill(0)
     oled.show()
+    image = Image.new("1", (oled.width, oled.height))
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((0, 0, oled.width, oled.height), outline=255, fill=255)
+
+    font1 = ImageFont.truetype('DejaVuSansMono.ttf', 11)
+    font2 = ImageFont.truetype('DejaVuSansMono.ttf', 16)
+    draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 except:
     pass     
 #con = sqlite3.connect('/home/pi/website/instance/logs1.db')    #change the file path of the path where "data.db is present"
@@ -48,13 +55,7 @@ prev_time = ""
 x_old = 0
 
 
-image = Image.new("1", (oled.width, oled.height))
-draw = ImageDraw.Draw(image)
-draw.rectangle((0, 0, oled.width, oled.height), outline=255, fill=255)
 
-font1 = ImageFont.truetype('DejaVuSansMono.ttf', 11)
-font2 = ImageFont.truetype('DejaVuSansMono.ttf', 16)
-draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 
 while True:
     # Read a frame from the video capture
@@ -103,11 +104,14 @@ while True:
 
     if motion_detected and motion_frames > 10 : 
         dir = os.listdir("/home/Darterone/Pictures/LoRaComm_Imgs")             #change the directory path to the dir where pictures are stored after capture 
-        draw.text((0,52),"Capturing Movement", font=font1, fill=255)
 
-        oled.image(image)
-        oled.show()
-        time.sleep(LOOPTIME)
+        try:
+            draw.text((0,52),"Capturing Movement", font=font1, fill=255)
+            oled.image(image)
+            oled.show()
+            time.sleep(LOOPTIME)
+        except:
+            pass
         
         try:
             for d in dir:
@@ -143,6 +147,7 @@ while True:
         motion_detected = False
         motion_frames = 0
         prev_time = t
+        
         with open(file_name,  'rb') as f:
             x = f.read()
             yy = (str(x[-2:]) == "b'\\xff\\xd9'"  )
@@ -176,12 +181,17 @@ while True:
         except:
             file_name = "/home/Darterone/Pictures/LoRaComm_Imgs/image_1.jpg"
 
-        dir = os.listdir("/home/Darterone/Pictures/LoRaComm_Imgs")             #change the directory path to the dir where pictures are stored after capture 
-        draw.text((0,52),"Capturing Image: " +str(file_name) , font=font1, fill=255)
+        dir = os.listdir("/home/Darterone/Pictures/LoRaComm_Imgs")             #change the directory path to the dir where pictures are stored after capture
+        
+        try:
+            draw.text((0,52),"Capturing Image: " +str(file_name) , font=font1, fill=255)
+            oled.image(image)
+            oled.show()
+            time.sleep(0.8)
 
-        oled.image(image)
-        oled.show()
-        time.sleep(0.1)
+        except:
+            pass
+        
         print(file_name)
         #cv2.imwrite(file_name, frame)
         #frame.save(file_name,"JPEG",optimize=True,quality=10)
@@ -213,14 +223,15 @@ while True:
             oled.fill(0)
             oled.show()
 
-            image = Image.new("1", (oled.width, oled.height))
+            try:
+                image = Image.new("1", (oled.width, oled.height))
+                draw = ImageDraw.Draw(image)
+                draw.rectangle((0, 0, oled.width, oled.height), outline=255, fill=255)
+                draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 
-            draw = ImageDraw.Draw(image)
-            draw.rectangle((0, 0, oled.width, oled.height), outline=255, fill=255)
-
-        
-            draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
-        
+            except:
+                pass
+                
             cur.execute('''INSERT INTO log1(object_detected, photo_capture, image_name, time) VALUES (?,?,?,?)''',('Triggered', file_name, file_name.split("/")[4],y))
             # commit changes
             con.commit()
