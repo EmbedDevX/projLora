@@ -59,7 +59,7 @@ x_old = 0
 
 while True:
     # Read a frame from the video capture
-    con = sqlite3.connect('/var/www/application/instance/logs1.db')            #change the file path of the path where "data.db is present"
+    con = sqlite3.connect('/var/www/WebApplication/instance/logs1.db')            #change the file path of the path where "data.db is present"
 
  
 # create cursor object
@@ -93,7 +93,7 @@ while True:
 
     # Check if motion is detected for a certain number of frames
     try:
-        with open("/var/www/application/trigger.log", 'r') as f:              #change the file path of the path where "trigger.log is present"
+        with open("/var/www/WebApplication/trigger.log", 'r') as f:              #change the file path of the path where "trigger.log is present"
             r = f.read()
         st, t = r.split("/")
     except:
@@ -220,10 +220,10 @@ while True:
 
         if yy:
             y = datetime.now()
-            oled.fill(0)
-            oled.show()
 
             try:
+                oled.fill(0)
+                oled.show()
                 image = Image.new("1", (oled.width, oled.height))
                 draw = ImageDraw.Draw(image)
                 draw.rectangle((0, 0, oled.width, oled.height), outline=255, fill=255)
