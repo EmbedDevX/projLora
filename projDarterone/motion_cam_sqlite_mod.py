@@ -110,6 +110,10 @@ while True:
             oled.image(image)
             oled.show()
             time.sleep(LOOPTIME)
+            oled.draw
+            draw.rectangle((0, 0, oled.width, oled.height), outline=255, fill=255)
+            draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
+        
         except:
             pass
         
@@ -188,6 +192,8 @@ while True:
             oled.image(image)
             oled.show()
             time.sleep(0.8)
+            draw.rectangle((0, 0, oled.width, oled.height), outline=255, fill=255)
+            draw.rectangle((0, 0, oled.width, oled.height), outline=0, fill=0)
 
         except:
             pass
